@@ -101,7 +101,8 @@ def mysql_on_create(body, spec, **kwargs):
 
     # Cоздаем PVC  и PV для бэкапов:
     try:
-        backup_pv = render_template('backup-pv.yml.j2', {'name': name})
+        backup_pv = render_template('backup-pv.yml.j2', {'name': name,
+                                                        'storage_size': storage_size})
         api = kubernetes.client.CoreV1Api()
         print(api.create_persistent_volume(backup_pv))
         api.create_persistent_volume(backup_pv)
@@ -109,7 +110,8 @@ def mysql_on_create(body, spec, **kwargs):
         pass
 
     try:
-        backup_pvc = render_template('backup-pvc.yml.j2', {'name': name})
+        backup_pvc = render_template('backup-pvc.yml.j2', {'name': name,
+                                                            'storage_size': storage_size})
         api = kubernetes.client.CoreV1Api()
         api.create_namespaced_persistent_volume_claim('default', backup_pvc)
     except kubernetes.client.rest.ApiException:
