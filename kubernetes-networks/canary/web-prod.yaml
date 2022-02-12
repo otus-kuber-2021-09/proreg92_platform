@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: web-prod
+  labels:
+    name: web-prod
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: web-prod
+spec: 
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template: 
+    metadata:
+      name: web
+      labels:
+        app: web
+    spec:
+      volumes:
+        - name: app
+          emptyDir: {}
+      containers:
+        - name: web
+          image: proreg92/otus_task1:1.0
+          volumeMounts: 
+            - name: app
+              mountPath: /app
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 8000
+          livenessProbe:
+            tcpSocket: { port: 8000 }  
+      initContainers:
+        - name: init-myservice
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'wget -O- https://tinyurl.com/otus-k8s-intro | sh']
+          volumeMounts:
+            - name: app
+              mountPath: /app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-svc
+  namespace: web-prod
+  labels:
+    app: web
+spec:
+  selector:
+    app: web
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+--- 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+  namespace: web-prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /web
+        pathType: Prefix
+        backend:
+          service: 
+            name: web-svc
+            port: 
+              number: 8000
