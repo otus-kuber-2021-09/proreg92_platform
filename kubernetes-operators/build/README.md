@@ -2,7 +2,7 @@
 
 ```sh
 pip3 install pyyaml==5.4.1
-pip3 install jinja2 kubernetes
+pip3 install kopf jinja2 kubernetes
 ```
 
 ### checking db

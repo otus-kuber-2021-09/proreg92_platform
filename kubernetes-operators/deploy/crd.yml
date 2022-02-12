@@ -45,6 +45,7 @@ spec:
                 - image
                 - database
                 - password
+                - storage_size
   names:                # различные форматы имени объекта CR
     kind: MySQL         # kind CR
     plural: mysqls      

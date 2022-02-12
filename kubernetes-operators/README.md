@@ -31,5 +31,6 @@ kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus
 +----+-------------+
 |  1 | some data   |
 |  2 | some data-2 |
+|  3 | some data-3 |
 +----+-------------+
 ```

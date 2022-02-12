@@ -40,8 +40,8 @@ def delete_success_jobs(mysql_instance_name):
                 (jobname == f"restore-{mysql_instance_name}-job"):
             if job.status.succeeded == 1:
                 api.delete_namespaced_job(jobname,
-                                          'default',
-                                          propagation_policy='Background')
+                                        'default',
+                                        propagation_policy='Background')
 
 
 @kopf.on.create('otus.homework', 'v1', 'mysqls')
