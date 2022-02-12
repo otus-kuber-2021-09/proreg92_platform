@@ -34,3 +34,20 @@ kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus
 |  3 | some data-3 |
 +----+-------------+
 ```
+
+P.S. Результаты после дебага оператора и тестирования нескольких идей/фиксов/work-around
+
+![Caption for the picture.](./result_of_fixed_mysql_operator.png)
+
+1. Root cause: mysql-pv не удалялся представленным питоновским кодом оператора из-за финалайзера
+Подробнее [Finalizers](https://kubernetes.io/blog/2021/05/14/using-finalizers-to-control-deletion/)
+2. Как можно пофиксить или обойти эту проблему:
+   - я изменил static name в темлейте mysql-pv.yml.j2 на генерацию динамических имен generateName
+   - проверил, все работает, только надо не забывать удалять старые pv
+3. Еще один способ этого избежать: патчить pv или редактировать манифест перед удалением CR
+
+```sh
+kubectl patch configmap/mymap \
+    --type json \
+    --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]'
+```

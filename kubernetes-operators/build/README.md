@@ -21,4 +21,4 @@ kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus
 
 ### Docker hub: mysql-operator
 
-link: https://hub.docker.com/layers/192109157/proreg92/otus_crd_mysqloperator/1.0/images/sha256-cfad37312e90ca1fa6c77375ffd0ceaaca732efa93455ffef40609c1fcc28672?context=repo 
+link: https://hub.docker.com/layers/192109157/proreg92/otus_crd_mysqloperator/1.1/images/
