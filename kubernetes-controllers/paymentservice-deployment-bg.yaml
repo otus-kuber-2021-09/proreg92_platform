@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentservice
+  labels:
+    app: paymentservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: paymentservice
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: paymentservice
+    spec:
+      containers:
+      - name: paymentservice
+        image: proreg92/otus_task3_paymentsvc:2.0  # image: proreg92/otus_task3_paymentsvc:2.0
+        
+        env:
+        - name: PORT
+          value: "50051"
+        - name: GCLOUD_PROJECT
+          value: "123218358777"
+              
