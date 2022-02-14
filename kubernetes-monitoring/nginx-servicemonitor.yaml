@@ -1,6 +1,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  annotations:
+    meta.helm.sh/release-name: stable
+    meta.helm.sh/release-namespace: default
   name: nginx-monitor
   namespace: default
   labels:
@@ -13,3 +16,4 @@ spec:
   endpoints:
   - port: metrics
     interval: 30s
+  jobLabel: jobLabel
