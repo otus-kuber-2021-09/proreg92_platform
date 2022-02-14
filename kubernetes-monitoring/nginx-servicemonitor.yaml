@@ -2,18 +2,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: nginx-monitor
+  namespace: default
   labels:
     team: sre
+    app: nginx
 spec:
   selector:
     matchLabels:
-      app: nginx-service
+      app: nginx
   endpoints:
-  - port: web
-    path: /basic_status
-    scheme: http
-    scrapeTimeout: 10s
-  jobLabel: myjob-nginx
-  namespaceSelector:
-    matchNames:
-    - default
+  - port: metrics
+    interval: 30s

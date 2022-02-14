@@ -2,13 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-#  annotations:
-#    prometheus.io/scrape: 'true'
+  namespace: default
   labels:
-    app: nginx
+    app: nginx-service
 spec:
   ports:
-    - name: web
+    - name: http-web
       port: 80
       targetPort: 80
       protocol: TCP
@@ -18,4 +17,4 @@ spec:
       protocol: TCP
   selector:
     app: nginx
-  type: NodePort
+  type: ClusterIP
