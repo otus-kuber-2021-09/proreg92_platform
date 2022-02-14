@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-exporter-monitor
+  labels:
+    team: sre
+spec:
+  selector:
+    matchLabels:
+      app: nginx-service
+  endpoints:
+  - port: metrics
+    path: /metrics
+    scheme: http
+    scrapeTimeout: 10s
+  jobLabel: myjob-exporter
+  namespaceSelector:
+    matchNames:
+    - default

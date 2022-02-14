@@ -37,7 +37,7 @@ kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus
 
 P.S. Результаты после дебага оператора и тестирования нескольких идей/фиксов/work-around
 
-![Caption for the picture.](./result_of_fixed_mysql_operator.png)
+![result](./result_of_fixed_mysql_operator.png)
 
 1. Root cause: mysql-pv не удалялся представленным питоновским кодом оператора из-за финалайзера
 Подробнее [Finalizers](https://kubernetes.io/blog/2021/05/14/using-finalizers-to-control-deletion/)
@@ -47,7 +47,7 @@ P.S. Результаты после дебага оператора и тест
 3. Еще один способ этого избежать: патчить pv или редактировать манифест перед удалением CR
 
 ```sh
-kubectl patch configmap/mymap \
+kubectl patch pv/mysqls-pv-instance \
     --type json \
     --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]'
 ```
