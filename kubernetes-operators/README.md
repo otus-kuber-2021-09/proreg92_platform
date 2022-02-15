@@ -1,6 +1,6 @@
-### CRD/Operator 7 Task done.
+## 7. Kubernetes-Operators
 
-Kubernetes-Operators
+### CRD/Operator. MySQL-Operator
 
 1. Создаем CustomResource, CustomResourceDefinition.
 2. Отладка и валидация актуальной версии апихи кубернетес, отладка манифестов.
