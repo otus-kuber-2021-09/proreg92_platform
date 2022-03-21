@@ -1,7 +1,7 @@
 # proreg92_platform_re_init
 proreg92 Platform repository
 
-## In Progress...
+## Homework is done:
 
  - [x] Homework 1
  - [x] Homework 2
@@ -9,4 +9,4 @@ proreg92 Platform repository
  - [x] Homework 4
  - [x] Homework 5
  - [x] Homework 6
- - [] Homework 7 - in progress...
+ - [x] Homework 7 
